@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bungleapp-dev-204048-authRole",
+      "UnauthRoleArn": "arn:aws:iam::832784677323:role/amplify-bungleapp-dev-204048-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::832784677323:role/amplify-bungleapp-dev-204048-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-bungleapp-dev-204048-deployment",
+      "UnauthRoleName": "amplify-bungleapp-dev-204048-unauthRole",
+      "StackName": "amplify-bungleapp-dev-204048",
+      "StackId": "arn:aws:cloudformation:ca-central-1:832784677323:stack/amplify-bungleapp-dev-204048/3347ab30-ab24-11ec-88cd-0e5bced2f08a",
+      "AmplifyAppId": "d2bklpp5eifv7x"
+    },
+    "categories": {
+      "function": {
+        "bunglePosts": {
+          "deploymentBucketName": "amplify-bungleapp-dev-204048-deployment",
+          "s3Key": "amplify-builds/bunglePosts-67354c5a3568456a7473-build.zip"
+        }
+      },
+      "auth": {
+        "bungleappb582a2ab": {}
+      }
+    }
+  }
+}

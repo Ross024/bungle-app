@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/posts": {
+      "name": "/posts",
+      "lambdaFunction": "bunglePosts",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
