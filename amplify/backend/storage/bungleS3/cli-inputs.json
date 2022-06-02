@@ -1,0 +1,15 @@
+{
+  "resourceName": "bungleS3",
+  "policyUUID": "07596789",
+  "bucketName": "bungles3bucket",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "groupAccess": {}
+}

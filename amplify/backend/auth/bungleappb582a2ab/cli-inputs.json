@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "bungleappb582a2ab_identitypool_b582a2ab",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "bungleb582a2ab",
     "userPoolName": "bungleappb582a2ab_userpool_b582a2ab",
     "autoVerifiedAttributes": [
@@ -36,11 +36,49 @@
     "sharedId": "b582a2ab",
     "resourceName": "bungleappb582a2ab",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
-    "triggers": {},
+    "useDefault": "manual",
+    "triggers": {
+      "PreSignup": [
+        "custom"
+      ]
+    },
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [
+      {
+        "category": "function",
+        "resourceName": "bungleappb582a2abPreSignup",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
+    ],
+    "thirdPartyAuth": false,
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "hostedUI": false,
+    "authProviders": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PreSignUp\",\n    \"lambdaFunctionName\": \"bungleappb582a2abPreSignup\"\n  }\n]",
+    "permissions": []
   }
 }

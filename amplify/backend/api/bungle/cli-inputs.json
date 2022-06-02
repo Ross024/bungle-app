@@ -5,7 +5,32 @@
       "name": "/posts",
       "lambdaFunction": "bunglePosts",
       "permissions": {
-        "setting": "open"
+        "setting": "protected",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ],
+        "guest": [
+          "read"
+        ]
+      }
+    },
+    "/comments": {
+      "name": "/comments",
+      "lambdaFunction": "bungleComments",
+      "permissions": {
+        "setting": "protected",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ],
+        "guest": [
+          "read"
+        ]
       }
     }
   }

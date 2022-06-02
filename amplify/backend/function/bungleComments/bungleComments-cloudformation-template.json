@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.24\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.26\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -67,12 +67,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "bunglePosts",
+            "bungleComments",
             {
               "Fn::Join": [
                 "",
                 [
-                  "bunglePosts",
+                  "bungleComments",
                   "-",
                   {
                     "Ref": "env"
@@ -125,12 +125,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "bungleappLambdaRole4850160a",
+            "bungleappLambdaRoleee9bbbe5",
             {
               "Fn::Join": [
                 "",
                 [
-                  "bungleappLambdaRole4850160a",
+                  "bungleappLambdaRoleee9bbbe5",
                   "-",
                   {
                     "Ref": "env"

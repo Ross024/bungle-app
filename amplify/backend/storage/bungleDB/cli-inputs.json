@@ -1,0 +1,14 @@
+{
+  "resourceName": "bungleDB",
+  "tableName": "bungleDB",
+  "partitionKey": {
+    "fieldName": "PK",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "SK",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

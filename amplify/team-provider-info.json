@@ -9,17 +9,38 @@
       "UnauthRoleName": "amplify-bungleapp-dev-204048-unauthRole",
       "StackName": "amplify-bungleapp-dev-204048",
       "StackId": "arn:aws:cloudformation:ca-central-1:832784677323:stack/amplify-bungleapp-dev-204048/3347ab30-ab24-11ec-88cd-0e5bced2f08a",
-      "AmplifyAppId": "d2bklpp5eifv7x"
+      "AmplifyAppId": "d2bklpp5eifv7x",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-bungleapp-dev-204048-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-bungleapp-dev-204048-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "function": {
         "bunglePosts": {
           "deploymentBucketName": "amplify-bungleapp-dev-204048-deployment",
-          "s3Key": "amplify-builds/bunglePosts-67354c5a3568456a7473-build.zip"
+          "s3Key": "amplify-builds/bunglePosts-4354595866387850466d-build.zip"
+        },
+        "bungleappbungleDBLayer": {
+          "deploymentBucketName": "amplify-bungleapp-dev-204048-deployment",
+          "s3Key": "amplify-builds/bungleappbungleDBLayer-LambdaLayerVersion6af60079-build.zip"
+        },
+        "bungleComments": {
+          "deploymentBucketName": "amplify-bungleapp-dev-204048-deployment",
+          "s3Key": "amplify-builds/bungleComments-65496f66566741555673-build.zip"
+        },
+        "bungleappb582a2abPreSignup": {
+          "deploymentBucketName": "amplify-bungleapp-dev-204048-deployment",
+          "s3Key": "amplify-builds/bungleappb582a2abPreSignup-5a62516136656a383947-build.zip"
         }
       },
       "auth": {
-        "bungleappb582a2ab": {}
+        "bungleappb582a2ab": {},
+        "true": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2bklpp5eifv7x",
+          "type": "manual"
+        }
       }
     }
   }

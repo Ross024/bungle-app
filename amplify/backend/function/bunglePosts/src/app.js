@@ -1,6 +1,10 @@
 /* Amplify Params - DO NOT EDIT
+	AUTH_BUNGLEAPPB582A2AB_USERPOOLID
 	ENV
 	REGION
+	STORAGE_BUNGLEDB_ARN
+	STORAGE_BUNGLEDB_NAME
+	STORAGE_BUNGLEDB_STREAMARN
 Amplify Params - DO NOT EDIT *//*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
@@ -10,7 +14,7 @@ See the License for the specific language governing permissions and limitations 
 */
 
 
-
+const database = require('/opt/database.js')
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -21,21 +25,72 @@ const app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
 
+var cors = require('cors');
+app.use(cors());
+
 // Enable CORS for all methods
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Headers", "*")
-  next()
+  if('OPTIONS' === req.method) {
+    res.send(200);
+  } else {
+    next()
+  }
 });
+
+
+const AWS = require('aws-sdk')
+
+// const bucketName = "bungles3bucket"
+
+async function getAuthUser(req) {
+  const authProvider = req.apiGateway.event.requestContext.identity.cognitoAuthenticationProvider
+  console.log({authProvider})
+  if (!authProvider) {
+    return
+  }
+  const parts = authProvider.split(':');
+  const poolIdParts = parts[parts.length - 3];
+  if (!poolIdParts) {
+    return 
+  }
+  const userPoolIdParts = poolIdParts.split('/');
+
+  const userPoolId = userPoolIdParts[userPoolIdParts.length - 1];
+  const userPoolUserId = parts[parts.length - 1];
+
+  const cognito = new AWS.CognitoIdentityServiceProvider();
+  const listUsersResponse = await cognito.listUsers({
+      UserPoolId: userPoolId,
+      Filter: `sub = "${userPoolUserId}"`,
+      Limit: 1,
+    }).promise();
+
+  const user = listUsersResponse.Users[0];
+  return user
+}
 
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/posts', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+app.get('/posts', async function(req, res) {
+  try {
+    // const authUser = await getAuthUser(req)
+    let posts = await database.getPosts()
+    posts.Items = posts.Items.map(post => {
+      return {
+        ...post,
+        id: post.SK.replace("POST#", "")
+      }
+    })
+    res.send(posts)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send(error)
+  }
 });
 
 app.get('/posts/*', function(req, res) {
@@ -47,9 +102,17 @@ app.get('/posts/*', function(req, res) {
 * Example post method *
 ****************************/
 
-app.post('/posts', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+app.post('/posts', async function(req, res) {
+  const description = req.body.description
+  const imageUrl = req.body.imageUrl
+
+  try {
+    const user = await getAuthUser(req);
+    const result = await database.createPost(user.Username, description, imageUrl);
+    res.send(result)
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 app.post('/posts/*', function(req, res) {
@@ -66,9 +129,19 @@ app.put('/posts', function(req, res) {
   res.json({success: 'put call succeed!', url: req.url, body: req.body})
 });
 
-app.put('/posts/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+app.put('/posts/:id', async function(req, res) {
+  const description = req.body.description
+  const postId = req.body.postId
+
+  console.log(description, postId)
+
+  try {
+    const user = await getAuthUser(req);
+    const result = await database.updatePost(user.Username, postId, description);
+    res.send(result)
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 /****************************
@@ -80,9 +153,15 @@ app.delete('/posts', function(req, res) {
   res.json({success: 'delete call succeed!', url: req.url});
 });
 
-app.delete('/posts/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
+app.delete('/posts/:id', async function(req, res) {
+  const postId = req.params.id
+  try {
+    const user = await getAuthUser(req);
+    const result = await database.deletePost(user.Username, postId);
+    res.send(result)
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 app.listen(3000, function() {
